@@ -46,6 +46,7 @@ export class PortfolioModule { }
 -------------------------------------------------------
             ===== ANATOMIA DE ROTAS =====
 -------------------------------------------------------
+
 - No arquivo app.module.ts importar os módulos criados
 e adicioná-los no campo de imports:
 
@@ -177,3 +178,112 @@ exata;
 
 - No arquivo menu.component.css adicionar o nome da classe
 e sueus estilos;
+
+-------------------------------------------------------
+      ===== RECUPERANDO PARÂMETROS DAS ROTAS =====
+-------------------------------------------------------
+
+- No arquivo app-routing.module.ts alterar
+{path: 'portfolio', component: CardComponent}, para:
+
+{path: 'portfolio/:id', component: CardComponent},
+
+- Tudo que for adicionado após portfolio será recuperado
+pelo id;
+
+- Fazer uma injeção de dependencias na área class do
+arquivo card.component.ts:
+
+export class CardComponent implements OnInit {
+
+  constructor(private activeRoute: ActivatedRoute) {
+    this.activeRoute.params.subscribe(
+      res => console.log(res)
+    )
+  }
+
+ngOnInit(): void {
+  }
+
+}
+
+-------------------------------------------------------
+      ===== RECUPERANDO QueryParams DE ROTAS =====
+-------------------------------------------------------
+
+- No arquivo card.component.ts adicionar:
+
+export class CardComponent implements OnInit {
+
+  constructor(private activeRoute: ActivatedRoute) {
+
+    /* Para recuperar o id:
+    http://localhost:4200/portfolio/{1} */
+    this.activeRoute.params.subscribe(
+      res => console.log(res)
+      )
+
+    /*Para recuperar QueryParams:
+    http://localhost:4200/portfolio/1?name=brenda&token=123 */
+      this.activeRoute.queryParams.subscribe(
+        res => console.log(res)
+    )
+  }
+
+  ngOnInit(): void {
+  }
+
+}
+
+- Observar se ActionRoute será importado automaticamente
+ao início da página do arquivo em que foi criado;
+
+-------------------------------------------------------
+      ===== REDIRECIONAMENTO POR COMPOENTE =====
+-------------------------------------------------------
+
+- Obrigar o componente a ir para outra rota;
+- No arquivo card.component.ts criar outra injeção de
+dependencia:
+
+constructor(
+    private activeRoute: ActivatedRoute,
+    private navegador: Router
+    )
+
+[...]
+
+ ngOnInit(): void {
+    setInterval(() => {
+      this.navegador.navigate(['/'])
+    }, 5000)
+  }
+/* toda vez que for para outra página depois de 5s volta
+para a página inicial */
+
+-------------------------------------------------------
+              ===== ROTAS CHILDREN =====
+-------------------------------------------------------
+
+- No arquivo app-routing.module.ts alterar path
+portfolio/:id para:
+
+const routes: Routes = [
+  {path:'', component: TitleComponent, pathMatch:'full'},
+  {path:'portfolio', component: CardComponent,
+  children:[ //[array] rota pai
+    {path:':id', component: CardComponent,
+      pathMatch:'prefix'}, //rota filho
+  ]},
+  {path:'**', redirectTo:''}
+];
+
+-------------------------------------------------------
+        ===== PARÂMETROSDE ROTAS CHILDREN =====
+-------------------------------------------------------
+
+- No arquivo card.component.ts adicionar:
+
+this.activeRoute.firstChild?.params.subscribe(
+        res => console.log(res)
+        )
