@@ -1,0 +1,114 @@
+=======================================================
+                      ROTAS ANGULAR
+=======================================================
+
+-------------------------------------------------------
+Introdução e Criação de páginas ANGULAR
+-------------------------------------------------------
+
+- Criar novo projeto: ng new nome da pasta;
+- Criar um módulo: ng g m pages/index;
+- Criar um módulo: ng g m pages/portfolio;
+- Criar um componente: ng g c pages/index/title;
+- Criar um componente: ng g c pages/portfolio/card;
+- No arquivo module do index adicionar TitleComponent
+ao exports:
+
+@NgModule({
+  declarations: [
+    TitleComponent
+  ],
+  exports: [
+    TitleComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class IndexModule { }
+
+- No arquivo module do portfolio adicionar
+CardComponent ao exports:
+
+@NgModule({
+  declarations: [
+    CardComponent
+  ],
+  exports: [
+    CardComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class PortfolioModule { }
+
+-------------------------------------------------------
+            ===== ANATOMIA DE ROTAS =====
+-------------------------------------------------------
+- No arquivo app.module.ts importar os módulos criados
+e adicioná-los no campo de imports:
+
+IMPORTANDO MÓDULOS:
+import { IndexModule } from
+'./pages/index/index.module';
+
+import { PortfolioModule } from
+'./pages/portifolio/portfolio.module';
+
+ADICIONANDO AO IMPORTS:
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    IndexModule,
+    PortfolioModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+-------------------------------------------------------
+          ===== CRIANDO AS PRIMEIRAS ROTAS =====
+-------------------------------------------------------
+
+- No arquivo title.component.html escrever:
+<h1>O que desejar escrever...</h1>
+<p>Escrever o que quiser....</p>
+
+- No arquivo card.component.html escrever:
+
+<h1>Portfólio</h1>
+<div>
+  <img src="" alt="">
+  <p>card works!</p>
+</div>
+
+- No arquivo app-routing.module.ts adicionar rotas:
+
+const routes: Routes = [
+  {path:'', component: TitleComponent, pathMatch:'full'}
+  {path:'portfolio', component: CardComponent,
+  pathMatch:'prefix'}
+];
+
+- Ao adicionar o TitleComponent como rota observar se
+foi importado automaticamente no mesmo arquivo;
+
+- pathMatch full --> URL exata, sem variações;
+
+- pathMatch prefix --> URL contenha o que deseja no
+prefixo e pode ter outras variações a frente;
+
+- Por padrão o pathMatch se não for adicionado uma opção
+será como prefix;
+
+- Para uma URL principal, geralmente é utilizado
+pathMatch: 'full'
+
+-------------------------------------------------------
