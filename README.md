@@ -2,5 +2,17 @@
 
 ## Aula: Trabalhando com Rotas no Angular
 
-## IN PROCESS ⏳
-<img src="https://www.digitow.com.br/wp-content/uploads/2021/04/Pinky-e-o-Cerebro-Warner-Bros.gif">
+### Introdução a Rotas
+- Introdução
+- Criando páginas angular
+
+### Trabalhando com Rotas
+- Anatomia de rotas
+- Criando suas primeiras rotas
+- Rotas coringa
+- Navegando entre páginas com RouterLink
+- ActiveRouter
+- Recuperando QueryParams de rotas
+- Redirecionamento por componente
+- Rotas children
+- Parâmetros de rotas children
