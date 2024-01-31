@@ -112,3 +112,68 @@ será como prefix;
 pathMatch: 'full'
 
 -------------------------------------------------------
+              ===== ROTAS CORINGA =====
+-------------------------------------------------------
+
+- No arquivo app-routing.module.ts adicionar rota:
+
+  {path:'**', redirectTo:''}
+
+- Se colocar os ** no path significa qualquer coisa;
+
+- Se deixar o redirectTo como vazio, retorna para a
+página inicial. Pode ser adicionado qualquer outro tipo
+de página;
+
+-------------------------------------------------------
+  ===== Navegando entre páginas com RouterLink =====
+-------------------------------------------------------
+
+- Criar um component ng g c shared/menu;
+- No arquivo menu.component.html criar uma estrutura
+de menu:
+
+<div>
+  <ul>
+    <li><a [routerLink]="['/']">HOME</a></li>
+    <li><a [routerLink]="['/portfolio']">PORTFÓLIO</a></li>
+  </ul>
+</div>
+
+- No arquivo menu.component.ts copiar o seletor app-menu
+e colar no arquivo app.component.html como tag:
+
+<app-menu></app-menu>
+
+-------------------------------------------------------
+                ===== ActiveRouter =====
+-------------------------------------------------------
+
+- No arquivo menu.component.html adicionar:
+
+[routerLinkActive]="['nome-de-uma-classe']"
+
+EXEMPLO:
+
+<div>
+  <ul>
+    <li>
+      <a [routerLink]="['/']"
+         [routerLinkActive]="['activated']"
+         [routerLinkActiveOptions]="{exact: true}"
+         >HOME
+      </a>
+    </li>
+
+    <li>
+      <a [routerLink]="['/portfolio']"
+         [routerLinkActive]="['activated']">PORTFÓLIO</a>
+    </li>
+  </ul>
+</div>
+
+- routerLinkActiveOptions --> especificar quando a rota for
+exata;
+
+- No arquivo menu.component.css adicionar o nome da classe
+e sueus estilos;
